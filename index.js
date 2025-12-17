@@ -18,8 +18,14 @@ app.post('/api/gemini', async (req, res) => {
   try {
     const { prompt } = req.body
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
       { contents: [{ parts: [{ text: prompt }] }] },
+      {
+        headers: {
+          'x-goog-api-key': GEMINI_API_KEY,
+          'Content-Type': 'application/json',
+        }
+      }
     )
     res.json(response.data)
   } catch (error) {
